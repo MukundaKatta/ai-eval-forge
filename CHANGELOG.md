@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0] - 2026-04-24
+
+### Added
+- `aef compare baseline.json current.json` — compare two suite-result JSONs (from `aef score`) and report regressions, improvements, score changes, added/removed cases, and pass-rate delta. Renders as markdown by default, JSON with `--format json`. Exit code `1` if any case flipped pass → fail or was removed from the suite.
+- Library API: `compare_suites`, `compare_files`, `render_compare_markdown`, `CaseDiff`, `CompareResult`.
+- 11 new tests covering compare logic and CLI.
+
 ## [0.1.0] - 2026-04-24
 
 ### Added

@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "ai-eval-forge"
-version = "0.1.0"
-description = "Zero-dependency eval harness for LLM and agent regression testing. Scores outputs with exact, contains, regex, JSON, citation, and token-F1 checks."
+version = "0.2.0"
+description = "Zero-dependency eval harness for LLM and agent regression testing. Scores outputs with exact, contains, regex, JSON, citation, and token-F1 checks. Compares two runs to flag regressions."
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
