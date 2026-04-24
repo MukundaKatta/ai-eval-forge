@@ -1,0 +1,48 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ai-eval-forge"
+version = "0.1.0"
+description = "Zero-dependency eval harness for LLM and agent regression testing. Scores outputs with exact, contains, regex, JSON, citation, and token-F1 checks."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Mukunda Katta", email = "mukundkst@gmail.com" }]
+keywords = ["llm", "eval", "evaluation", "regression", "testing", "agent", "anthropic", "openai", "google", "cli"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Software Development :: Testing",
+  "Topic :: Software Development :: Quality Assurance",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.urls]
+Homepage = "https://github.com/MukundaKatta/ai-eval-forge"
+Issues = "https://github.com/MukundaKatta/ai-eval-forge/issues"
+Source = "https://github.com/MukundaKatta/ai-eval-forge"
+
+[project.scripts]
+ai-eval-forge = "ai_eval_forge.cli:main"
+aef = "ai_eval_forge.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ai_eval_forge"]
+
+[tool.hatch.build.targets.sdist]
+include = ["/src", "/tests", "/README.md", "/LICENSE"]
