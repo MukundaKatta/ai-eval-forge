@@ -40,8 +40,12 @@ def main(argv: Sequence[str] | None = None) -> int:
         "compare",
         help="Compare two suite-result JSON files (from `aef score`) and report regressions.",
     )
-    compare.add_argument("baseline", help="Baseline suite-result JSON (previous / known-good run).")
-    compare.add_argument("current", help="Current suite-result JSON (new run to check).")
+    compare.add_argument(
+        "baseline", help="Baseline suite-result JSON (previous / known-good run)."
+    )
+    compare.add_argument(
+        "current", help="Current suite-result JSON (new run to check)."
+    )
     compare.add_argument(
         "--format",
         choices=["json", "markdown"],
@@ -79,7 +83,11 @@ def _run_score(args: argparse.Namespace) -> int:
         print(f"error: file not found: {path}", file=sys.stderr)
         return 2
     text = path.read_text(encoding="utf-8")
-    cases = parse_cases(text)
+    try:
+        cases = parse_cases(text)
+    except json.JSONDecodeError as exc:
+        print(f"error: failed to parse cases file: {exc}", file=sys.stderr)
+        return 2
     result = evaluate_suite(cases)
 
     if args.format == "markdown":

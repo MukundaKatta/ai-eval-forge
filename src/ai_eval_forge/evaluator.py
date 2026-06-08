@@ -104,7 +104,7 @@ def _arrayify(value: Any) -> list:
 
 
 def _round(value: float, places: int = 4) -> float:
-    factor = 10 ** places
+    factor = 10**places
     return round(value * factor) / factor
 
 
@@ -195,11 +195,7 @@ def run_check(check: dict, context: dict) -> CheckResult:
         values = [str(v) for v in _arrayify(check.get("value", expected))]
         case_sensitive = bool(check.get("caseSensitive"))
         haystack = actual if case_sensitive else actual.lower()
-        hits = [
-            v
-            for v in values
-            if (v if case_sensitive else v.lower()) in haystack
-        ]
+        hits = [v for v in values if (v if case_sensitive else v.lower()) in haystack]
         score = len(hits) / len(values) if values else 1.0
         detail = f"{len(hits)}/{len(values)} substrings found"
 
@@ -270,8 +266,14 @@ def evaluate_case(test_case: dict, index: int = 0) -> CaseResult:
     meta = {
         "input": test_case.get("input"),
         "tags": test_case.get("tags") or [],
-        "costUsd": float(test_case.get("costUsd", (test_case.get("meta") or {}).get("costUsd", 0))),
-        "latencyMs": float(test_case.get("latencyMs", (test_case.get("meta") or {}).get("latencyMs", 0))),
+        "costUsd": float(
+            test_case.get("costUsd", (test_case.get("meta") or {}).get("costUsd", 0))
+        ),
+        "latencyMs": float(
+            test_case.get(
+                "latencyMs", (test_case.get("meta") or {}).get("latencyMs", 0)
+            )
+        ),
     }
 
     return CaseResult(

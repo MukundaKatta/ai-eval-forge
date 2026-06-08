@@ -70,7 +70,9 @@ class CompareResult:
 
 
 def _index_cases(suite_json: dict) -> dict[str, dict]:
-    return {c.get("id", f"case-{i}"): c for i, c in enumerate(suite_json.get("cases", []))}
+    return {
+        c.get("id", f"case-{i}"): c for i, c in enumerate(suite_json.get("cases", []))
+    }
 
 
 def compare_suites(baseline: dict, current: dict) -> CompareResult:
@@ -121,9 +123,11 @@ def compare_files(baseline_path: str, current_path: str) -> CompareResult:
     return compare_suites(baseline, current)
 
 
-def render_compare_markdown(r: CompareResult, baseline_label: str = "baseline", current_label: str = "current") -> str:
+def render_compare_markdown(
+    r: CompareResult, baseline_label: str = "baseline", current_label: str = "current"
+) -> str:
     lines: list[str] = []
-    lines.append(f"# AI Eval Forge Comparison")
+    lines.append("# AI Eval Forge Comparison")
     lines.append("")
     lines.append(
         f"Pass rate: {baseline_label} {r.baseline_pass_rate:.0%} → "
@@ -165,7 +169,9 @@ def render_compare_markdown(r: CompareResult, baseline_label: str = "baseline", 
         lines.append("## Score changes (still-passing or still-failing)")
         lines.append("")
         for d in r.score_changes:
-            lines.append(f"- `{d.id}`: {d.baseline_score} → {d.current_score} ({d.score_delta:+})")
+            lines.append(
+                f"- `{d.id}`: {d.baseline_score} → {d.current_score} ({d.score_delta:+})"
+            )
         lines.append("")
 
     if r.added_ids:

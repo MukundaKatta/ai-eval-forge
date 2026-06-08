@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased]
+
+### Fixed
+- `aef score` on a malformed cases file now prints a clean error and exits `2` (matching the documented "exit `2` on bad input" contract and the behavior of `aef compare`), instead of crashing with an uncaught `JSONDecodeError` traceback and exit code `1`.
+
 ## [0.2.0] - 2026-04-24
 
 ### Added

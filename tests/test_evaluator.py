@@ -246,7 +246,9 @@ def test_evaluate_suite_sums_cost_and_latency() -> None:
 
 
 def test_parse_cases_json_array() -> None:
-    text = json.dumps([{"actual": "a", "expected": "a"}, {"actual": "b", "expected": "b"}])
+    text = json.dumps(
+        [{"actual": "a", "expected": "a"}, {"actual": "b", "expected": "b"}]
+    )
     cases = parse_cases(text)
     assert len(cases) == 2
 

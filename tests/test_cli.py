@@ -29,7 +29,9 @@ def test_cli_score_json_output(cases_file: Path, capsys: pytest.CaptureFixture) 
     assert data["summary"]["passed"] == 1
 
 
-def test_cli_score_markdown_output(cases_file: Path, capsys: pytest.CaptureFixture) -> None:
+def test_cli_score_markdown_output(
+    cases_file: Path, capsys: pytest.CaptureFixture
+) -> None:
     rc = main(["score", str(cases_file), "--format", "markdown"])
     assert rc == 1
     out = capsys.readouterr().out
@@ -38,7 +40,9 @@ def test_cli_score_markdown_output(cases_file: Path, capsys: pytest.CaptureFixtu
     assert "c1" in out and "c2" in out
 
 
-def test_cli_all_passing_exits_zero(tmp_path: Path, capsys: pytest.CaptureFixture) -> None:
+def test_cli_all_passing_exits_zero(
+    tmp_path: Path, capsys: pytest.CaptureFixture
+) -> None:
     f = tmp_path / "pass.jsonl"
     f.write_text(json.dumps({"actual": "x", "expected": "x"}))
     rc = main(["score", str(f)])
@@ -50,9 +54,21 @@ def test_cli_missing_file(capsys: pytest.CaptureFixture) -> None:
     assert rc == 2
 
 
+def test_cli_score_bad_json_exits_two(
+    tmp_path: Path, capsys: pytest.CaptureFixture
+) -> None:
+    f = tmp_path / "bad.jsonl"
+    f.write_text("{ not valid json")
+    rc = main(["score", str(f)])
+    assert rc == 2
+    assert "failed to parse" in capsys.readouterr().err
+
+
 def test_cli_accepts_json_array(tmp_path: Path, capsys: pytest.CaptureFixture) -> None:
     f = tmp_path / "arr.json"
-    f.write_text(json.dumps([{"actual": "x", "expected": "x"}, {"actual": "y", "expected": "y"}]))
+    f.write_text(
+        json.dumps([{"actual": "x", "expected": "x"}, {"actual": "y", "expected": "y"}])
+    )
     rc = main(["score", str(f)])
     assert rc == 0
     data = json.loads(capsys.readouterr().out)
